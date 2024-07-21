@@ -1,0 +1,26 @@
+### para get
+
+GET http://localhost:1234/pokemon/ditto
+
+
+### para get
+
+GET http://localhost:1234/
+
+### para crear un pokemon
+
+POST http://localhost:1234/
+Content-Type: application/json
+
+{
+ "name" : "lucario",
+ "type" : "psiquico",
+ "move" : [
+   "transform"
+ ]
+}
+
+
+### para actualizar un pokemon
+
+PUT http://localhost:1234/actualizo
