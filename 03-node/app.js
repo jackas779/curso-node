@@ -4,8 +4,13 @@ const cors = require('cors')
 const api = express()
 const movieJSON = require('./movies.json')
 const { validateMovie, partialMovie } = require('./schemas/movies')
+const { validationPaginator } = require('./schemas/pagination')
 
 const PORT = process.env.PORT ?? 1234
+
+function obtenerPelis(arr, start, end) {
+  return arr.slice(start, end)
+}
 
 api.use(cors({
   origin: (origin, callback) => {
@@ -32,13 +37,30 @@ api.disable('x-powered-by') // deshabilitar el header X-Powered-By: Express
 api.use(express.json())
 
 api.get('/movies', (req, res) => {
-  const { genero } = req.query
+  const { genero, pag } = req.query
 
   if (genero) {
     const filtersMovies = movieJSON.filter(
       movie => movie.genre.some(g => g.toLowerCase() === genero.toLowerCase())
     )
     return res.json(filtersMovies)
+  }
+
+  if (pag) {
+    const paginasTotales = Math.ceil(movieJSON.length / 2)
+    const result = validationPaginator(pag, paginasTotales)
+
+    if (!result.success) {
+      return res.status(204).json({ error: result.error.message })
+    }
+
+    const pagMovies = obtenerPelis(movieJSON, 0, 2)
+    const pagination = {
+      paginas: paginasTotales,
+      pagAct: pag
+    }
+    pagMovies.push(pagination)
+    return res.json(pagMovies)
   }
 
   res.json(movieJSON)
