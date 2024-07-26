@@ -2,7 +2,7 @@ const z = require('zod')
 
 function validationPaginator(input, number) {
   const pagination = z.object({
-    pagination: z.number().max(number).min(1)
+    pag: z.number().min(1).max(8)
   })
   return pagination.safeParse(input)
 }

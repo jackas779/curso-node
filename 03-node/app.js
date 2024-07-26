@@ -4,13 +4,9 @@ const cors = require('cors')
 const api = express()
 const movieJSON = require('./movies.json')
 const { validateMovie, partialMovie } = require('./schemas/movies')
-const { validationPaginator } = require('./schemas/pagination')
+// const { validationPaginator } = require('./schemas/pagination')
 
 const PORT = process.env.PORT ?? 1234
-
-function obtenerPelis(arr, start, end) {
-  return arr.slice(start, end)
-}
 
 api.use(cors({
   origin: (origin, callback) => {
@@ -47,14 +43,17 @@ api.get('/movies', (req, res) => {
   }
 
   if (pag) {
-    const paginasTotales = Math.ceil(movieJSON.length / 2)
-    const result = validationPaginator(pag, paginasTotales)
+    const currentPag = parseInt(pag)
+    const pageSize = 2
+    const paginasTotales = Math.ceil(movieJSON.length / pageSize)
 
-    if (!result.success) {
-      return res.status(204).json({ error: result.error.message })
+    if (pag > paginasTotales || pag < 1) {
+      return res.status(204).send('nel')
     }
+    const pagIni = (currentPag - 1) * 2
+    const pagFinal = pagIni + pageSize
 
-    const pagMovies = obtenerPelis(movieJSON, 0, 2)
+    const pagMovies = movieJSON.slice(pagIni, pagFinal)
     const pagination = {
       paginas: paginasTotales,
       pagAct: pag

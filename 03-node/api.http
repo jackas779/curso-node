@@ -1,6 +1,10 @@
 ### traer todas la peliculas
 GET http://localhost:1234/movies
 
+### traer todas la peliculas con paginacion
+GET http://localhost:1234/movies?pag=10
+
+
 ### pedir peliculas con un filtro de genero
 GET http://localhost:1234/movies?genero=DRAMA
 

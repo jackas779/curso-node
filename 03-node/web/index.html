@@ -12,45 +12,110 @@
     }
     img {
       height: auto;
-      width: 320px;
+      width: 250px;
       max-width: 100%;
+      max-height: 370px;
     }
+    .pagination a {
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .pagination a {
+      display: inline-block;
+      padding: 8px 16px;
+      text-decoration: none;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      color: #333;
+      margin: 4px;
+    }
+
+    .pagination a:hover {
+      background-color: #f1f1f1;
+    }
+
+    .pagination a.active {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .actual{
+      background: #42aedc;
+      color: white;
+    }
+
+
   </style>
 
-  <script type="module">
-    fetch('http://localhost:1234/movies?pag=9')
-    .then(response => response.json())
-    .then(movies =>{
-      const html = movies.map(movie => {
-        return `
-          <article data-id="${movie.id}">
-            <h2>${movie.title}</h2>
-            <img src="${movie.poster}" alt="${movie.title}">
-            <p>${movie.year}</p>
-
-            <button>Eliminar</button>
-          </article>
-        `
-      }).join('')
-
-      document.querySelector('main').innerHTML = html
-
-      document.addEventListener('click', e => {
-        if (e.target.matches('button')) {
-          const article = e.target.closest('article')
-          const id = article.dataset.id
-
-          fetch(`http://localhost:1234/movies/${id}`, {
-            method: 'DELETE'
-          })
-          .then(res => {
-            if (res.ok) {
-              article.remove()
-            }
-          })
+  <script>
+    function showsMovies(pages=1){
+      fetch('http://localhost:1234/movies?pag='+pages)
+      .then(response => {
+        console.log(response);
+        if(response.status == 200){
+          return response.json()
         }
       })
+      .then(movies =>{
+        console.log(movies);
+        const html = movies.map(movie => {
+          if(movie.id !== undefined){
+            return `
+              <article data-id="${movie.id}">
+                <h2>${movie.title}</h2>
+                <img src="${movie.poster}" alt="${movie.title}">
+                <p>${movie.year}</p>
+                <button>Eliminar</button>
+              </article>
+            `
+          }else{
+            // return`<article data-id="paginacion" class='paginacion'>${movie.paginas}</article>`
+            return showsPages(movie)
+          }
+        }).join('')
+
+        document.querySelector('main').innerHTML = html
+      })
+    }
+
+    function showsPages ({paginas,pagAct}){
+      let html = ''
+      for (let index = 1; index <= parseInt(paginas) ; index++) {
+        if(index === parseInt(pagAct)){
+          html += `<li><a class='actual' onclick='showsMovies(${index})'>${index}</a></li>`
+        }else{
+          html += `<li><a onclick='showsMovies(${index})'>${index}</a></li>`
+        }
+      }
+
+      return `<article id='paginas'><ul class="pagination">${html}</ul></article>`
+    }
+    
+    document.addEventListener('click', e => {
+      if (e.target.matches('button')) {
+        const article = e.target.closest('article')
+        const id = article.dataset.id
+
+        fetch(`http://localhost:1234/movies/${id}`, {
+          method: 'DELETE'
+        })
+        .then(res => {
+          if (res.ok) {
+            article.remove()
+          }
+        })
+      }
     })
+
+    showsMovies(1)
   </script>
 </head>
 <body>
