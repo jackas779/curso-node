@@ -59,13 +59,11 @@
     function showsMovies(pages=1){
       fetch('http://localhost:1234/movies?pag='+pages)
       .then(response => {
-        console.log(response);
         if(response.status == 200){
           return response.json()
         }
       })
       .then(movies =>{
-        console.log(movies);
         const html = movies.map(movie => {
           if(movie.id !== undefined){
             return `
@@ -78,7 +76,7 @@
             `
           }else{
             // return`<article data-id="paginacion" class='paginacion'>${movie.paginas}</article>`
-            return showsPages(movie)
+            return createPagination(movie)
           }
         }).join('')
 
@@ -98,6 +96,18 @@
 
       return `<article id='paginas'><ul class="pagination">${html}</ul></article>`
     }
+
+    function createPagination({paginas, pagAct}) {
+      const pages = [];
+
+      for (let i = 1; i <= paginas; i++) {
+        const pageClass = i === parseInt(pagAct) ? 'active' : '';
+        pages.push(`<li><a class="${pageClass}" onclick='showsMovies(${i})'>${i}</a></li>`);
+      }
+
+      return `<article id="paginas"><ul class="pagination">${pages.join('')}</ul></article>`;
+    }
+
     
     document.addEventListener('click', e => {
       if (e.target.matches('button')) {
