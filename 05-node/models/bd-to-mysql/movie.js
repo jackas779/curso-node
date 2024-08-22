@@ -47,8 +47,20 @@ export class MovieModel {
       return pagMovies
     }
     try {
-      const [results] = await connection.query('SELECT bin_to_uuid(id) AS id, title, year,director,duration,poster,rate FROM movies')
-      return results
+      const [results] = await connection.query(
+        `SELECT 
+          bin_to_uuid(m.id) AS id, m.title, m.year,m.director,m.duration,m.poster, 
+          GROUP_CONCAT(g.name SEPARATOR ', ') AS genres,m.rate 
+        FROM movies AS m 
+        INNER JOIN movies_genre mg ON m.id = mg.id_movie
+        INNER JOIN generos g ON mg.id_genero = g.id
+        GROUP BY m.id;`
+      )
+
+      return results.map((e) => ({
+        ...e,
+        genres: e.genres.split(', ')
+      }))
     } catch (e) {
       console.log(e)
     }
