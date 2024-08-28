@@ -11,17 +11,29 @@ export class MovieModel {
   static async getAll ({ genero, pag }) {
     if (genero) {
       const [idGenre] = await connection.execute('SELECT id FROM generos WHERE name = ?', [genero.toLowerCase()])
-      console.log(idGenre[0].id)
       if (idGenre.length === 0) return { message: 'Genero no encontrado' }
 
       const [{ id }] = idGenre
 
-      const [results] = await connection.execute(`SELECT bin_to_uuid(id) AS id, title, year,director,duration,poster,rate FROM movies 
-          INNER JOIN movies_genre
-          ON movies.id = movies_genre.id_movie 
-          WHERE movies_genre.id_genero = ${id}; `)
+      const [results] = await connection.execute(
+        `SELECT 
+          BIN_TO_UUID(m.id) AS id, m.title, m.year,m.director,m.duration,m.poster, 
+          GROUP_CONCAT(g.name SEPARATOR ', ') AS genres,m.rate 
+        FROM movies AS m
+        INNER JOIN (
+          SELECT id,id_genero FROM movies AS t1 
+          INNER JOIN  movies_genre as t2 ON t1.id = t2.id_movie 
+          WHERE id_genero = ${id}
+        ) AS t2 ON m.id = t2.id
+        INNER JOIN movies_genre mg  ON m.id = mg.id_movie
+        INNER JOIN generos g ON mg.id_genero = g.id
+        GROUP BY m.id; `
+      )
 
-      return results
+      return results.map((e) => ({
+        ...e,
+        genres: e.genres.split(', ')
+      }))
     }
     if (pag) {
       const [countPag] = await connection.query('SELECT COUNT(*) AS total FROM movies')
@@ -36,15 +48,29 @@ export class MovieModel {
       }
       const pagIni = (currentPag - 1) * pageSize
 
-      const [pagMovies] = await connection.query('SELECT bin_to_uuid(id) AS id, title, year,director,duration,poster,rate FROM movies LIMIT ?,?', [pagIni, pageSize])
+      const [pagMovies] = await connection.query(
+        `SELECT 
+          bin_to_uuid(m.id) AS id, m.title, m.year,m.director,m.duration,m.poster, 
+          GROUP_CONCAT(g.name SEPARATOR ', ') AS genres,m.rate 
+        FROM movies AS m 
+        INNER JOIN movies_genre mg ON m.id = mg.id_movie
+        INNER JOIN generos g ON mg.id_genero = g.id
+        GROUP BY m.id LIMIT ?,?`,
+        [pagIni, pageSize]
+      )
       const pagination = {
         pagActual: pag,
         totalPaginas: paginasTotales
       }
 
-      pagMovies.push(pagination)
+      const movies = pagMovies.map((e) => ({
+        ...e,
+        genres: e.genres.split(', ')
+      }))
 
-      return pagMovies
+      movies.push(pagination)
+
+      return movies
     }
     try {
       const [results] = await connection.query(

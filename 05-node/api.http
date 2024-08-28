@@ -13,10 +13,11 @@ POST http://localhost:1234/movies
 Content-Type: application/json
 
 {
-  "title": "The office",
+  "title": "pruebas",
   "year" : 2024,
   "director" : "Jhohanes Burgo",
   "duration" : 20,
+  "rate" : 9.9,
   "poster": "https://img.fruugo.com/product/4/49/14441494_max.jpg",
   "genre": [
     "Crime",
@@ -25,13 +26,13 @@ Content-Type: application/json
 }
 
 ### Actualizar una película
-PATCH http://localhost:1234/movies/cd7ac429-5d21-11ef-bcbc-2cf05d3f83c3
+PATCH http://localhost:1234/movies/9e6106f0-848b-4810-a11a-3d832a5610f9
 Content-Type: application/json
 
 {
-  "year": 1999
+  "year": 2010
 }
 
 
 ### Eliminar una peli
-DELETE  http://localhost:1234/movies/4b32e8cd-5d1f-11ef-bcbc-2cf05d3f83c3
+DELETE  http://localhost:1234/movies/9e6106f0-848b-4810-a11a-3d832a5610f9

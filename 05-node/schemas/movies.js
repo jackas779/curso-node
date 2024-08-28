@@ -25,10 +25,10 @@ const movieSchema = z.object({
   )
 })
 
-export function validateMovie(input) {
+export function validateMovie (input) {
   return movieSchema.safeParse(input)
 }
 
-export function partialMovie(input) {
+export function partialMovie (input) {
   return movieSchema.partial().safeParse(input)
 }

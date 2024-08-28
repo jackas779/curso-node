@@ -6,12 +6,20 @@ import { MovieController } from '../controllers/movies.js'
 
 // como leer un json module hasta que whit deje de ser experimental
 
-export const moviesRouter = Router()
+export const createMoviesRouter = ({ movieModel }) => {
+  const moviesController = new MovieController({ movieModel })
 
-moviesRouter.get('/', MovieController.getAll)
+  const moviesRouter = Router()
 
-moviesRouter.post('/', MovieController.create)
+  moviesRouter.get('/', moviesController.getAll)
 
-moviesRouter.patch('/:id', MovieController.update)
+  moviesRouter.post('/', moviesController.create)
 
-moviesRouter.delete('/:id', MovieController.delete)
+  moviesRouter.patch('/:id', moviesController.update)
+
+  moviesRouter.delete('/:id', moviesController.delete)
+
+  moviesRouter.use(moviesController.notFound)
+
+  return moviesRouter
+}
