@@ -1,13 +1,10 @@
 import express from 'express'
-import { fileURLToPath } from 'url';
-import path from 'path';
 import { verifyUser } from './schemas/schema.mjs';
+import path from 'path';
+import dirname from './utils/path.mjs';
 
-// Obtener la URL del archivo actual
-const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(import.meta.url);
 
-// Obtener el directorio del archivo
-const __dirname = path.dirname(__filename);
 const PORT = 1234
 
 const app = express();
@@ -18,7 +15,6 @@ app.use(express.json())
 app.get('/', (req,res)=>{
   // res.send(__dirname+'\\pdf\\factura.pdf' )
   res.sendFile(path.join(__dirname,'pdf','factura.pdf'))
-  console.log(path.join(__dirname,'pdf','factura.pdf'));
 })
 
 
@@ -32,8 +28,12 @@ app.get('/users', (req,res) =>{
     res.send({field: field ,error : error})
     return
   }
+  res.json(result.data)
+})
 
-  res.send("Usuario verificado")
+app.post('/register/users', (req,res)=>{
+  console.log(req.body);
+  res.send('hola mundo')
 })
 
 
