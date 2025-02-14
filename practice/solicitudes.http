@@ -1,0 +1,30 @@
+
+GET http://localhost:1234/
+
+###
+
+POST http://localhost:1234/user/
+Content-Type: application/json
+{
+
+}
+
+
+### 
+GET http://localhost:1234/users
+Content-Type: application/x-www-form-urlencoded
+
+&page=2
+&pageSize=10
+&user=diamedez diaz
+
+
+### 
+GET http://localhost:1234/users
+Content-Type: application/json
+
+{
+  "page": 2,
+  "pageSize": 10,
+  "user": "454545454545454"
+}
