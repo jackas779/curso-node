@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "node --watch index.mjs",
+    "dev": "node --env-file .env --watch index.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -14,6 +14,14 @@
   "dependencies": {
     "express": "4.21.2",
     "pdfkit": "0.16.0",
+    "swagger-jsdoc": "6.2.8",
+    "swagger-ui-express": "5.0.1",
     "zod": "3.24.2"
+  },
+  "devDependencies": {
+    "standard": "17.1.2"
+  },
+  "eslintConfig": {
+    "extends": "standard"
   }
 }

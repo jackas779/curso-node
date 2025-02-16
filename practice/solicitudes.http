@@ -10,10 +10,12 @@ Content-Type: application/json
   "username": "nameuser",
   "password": "123456789",
   "email":"correo@gmail.com",
-  "phone": 25489575232,
+  "phone": "2548957525",
   "firtsName" : "Jack",
   "lastName" : "Ardila",
-  "imgPhoto" : null
+  "imgPhoto" : null,
+  "age": 24,
+  "isAdult": true
 }
 
 
