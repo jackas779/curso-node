@@ -1,3 +1,4 @@
+import { UserModel } from '../models/user.model.mjs'
 import { validateUser } from '../schemas/user.mjs'
 
 export class UserController {
@@ -8,9 +9,9 @@ export class UserController {
       console.log(result.error.issues[0])
       const field = result.error.issues[0].path[0]
       const error = result.error.issues[0].message
-      res.status(422).send({ field, error })
-      return
+      return res.status(422).send({ field, error })
     }
-    res.status(201).json({response: "creado"})
+    const userModel = UserModel.create
+    return userModel
   }
 }
