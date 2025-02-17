@@ -2,9 +2,9 @@ import express from 'express'
 import path from 'path'
 import { createDirname } from './utils/path.mjs'
 import { verifyUser } from './schemas/schema.mjs'
-import { validateUser } from './schemas/user.mjs'
 import swaggerUI from 'swagger-ui-express'
 import specs from './swagger/swagger.mjs'
+import {createUserRoute} from './routes/user.route.mjs'
 
 const { __dirname } = createDirname(import.meta.url)
 const PORT = process.env.PORT || 3000
@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
   res.redirect('/api-docs')/// retorna un archivo
 })
 
-app.get('/users', (req, res) => {
+app.get('/user', (req, res) => {
   const { user } = req.body
   const result = verifyUser({ username: user })
 
@@ -38,17 +38,9 @@ app.get('./pdf', (req, res) => {
   res.sendFile(path.join(__dirname, 'pdf', 'factura.pdf'))/// retorna un archivo
 })
 
-app.post('/register/users', (req, res) => {
-  const result = validateUser(req.body)
-  if (!result.success) {
-    console.log(result.error.issues[0])
-    const field = result.error.issues[0].path[0]
-    const error = result.error.issues[0].message
-    res.send({ field, error })
-    return
-  }
-  res.json(req.body)
-})
+// app.post('/user/register', (userCreate))
+// app.use('/user/',createUserRoute()) /// rutas de usuarios manera 1
+app.use(createUserRoute())/// ruta de usuarios manera 2
 
 app.listen(PORT, () => {
   console.log(` escuchando desde http://localhost:${PORT}`)
