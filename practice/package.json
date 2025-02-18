@@ -19,6 +19,7 @@
     "zod": "3.24.2"
   },
   "devDependencies": {
+    "db-local": "3.1.0",
     "standard": "17.1.2"
   },
   "eslintConfig": {
