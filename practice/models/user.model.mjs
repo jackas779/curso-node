@@ -1,5 +1,6 @@
-export class  UserModel {
-  static create = ({input}) =>{
-    return res.status(201).json({response: "creado"})
+export class UserModel {
+  static create (){
+    console.log("proceso de guardado");
+    return {response: "creadodito desde su modelo"}
   }
 }

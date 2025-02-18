@@ -3,7 +3,7 @@ import { validateUser } from '../schemas/user.mjs'
 
 export class UserController {
   
-  create = (req,res)=>{
+  create (req,res){
     const result = validateUser(req.body)
     if (!result.success) {
       console.log(result.error.issues[0])
@@ -11,7 +11,7 @@ export class UserController {
       const error = result.error.issues[0].message
       return res.status(422).send({ field, error })
     }
-    const userModel = UserModel.create
-    return userModel
+    const userModel = UserModel.create()
+    return res.status(201).json(userModel)
   }
 }
