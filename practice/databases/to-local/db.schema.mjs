@@ -1,7 +1,5 @@
 import dbLocal from 'db-local'
-import { createDirname } from '../../utils/path.mjs';
 
-const {__dirname} = createDirname(import.meta.url);
 const {Schema} = new dbLocal({path: "./data"});
 
 const ModelPrueba = "Pruebas"
@@ -11,16 +9,17 @@ const baseModel = {
   },
   name: String,
   bag: {
-    items: Array,
-    id: String,
+    type: Array,
     required: true
   }
 }
 
 const Prueba = Schema(ModelPrueba,baseModel)
 
-Prueba.create({
-  _id: 1,
-  name : "lennart",
-  bag : [{ space1: "arroz" },{ space1: "arroz" }]
-}).save()
+// Prueba.create({
+//   _id: 3,
+//   name : "kar",
+//   bag : ["patilla", "lulo"]
+// }).save()
+
+console.log(Prueba.find(user => user.name == "lenny"));
