@@ -1,4 +1,5 @@
 import dbLocal from 'db-local'
+import { name } from './pruebas.js';
 
 const {Schema} = new dbLocal({path: "./data"});
 
@@ -22,4 +23,4 @@ const Prueba = Schema(ModelPrueba,baseModel)
 //   bag : ["patilla", "lulo"]
 // }).save()
 
-console.log(Prueba.find(user => user.name == "lenny"));
+console.log(Prueba.find(user => user.name == name));
