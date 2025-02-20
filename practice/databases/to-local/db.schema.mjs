@@ -1,11 +1,11 @@
-import dbLocal from 'db-local'
-import { name } from './pruebas.js';
+import DbLocal from 'db-local'
+import { name } from './pruebas.js'
 
-const {Schema} = new dbLocal({path: "./data"});
+const { Schema } = new DbLocal({ path: './data' })
 
-const ModelPrueba = "Pruebas"
+const ModelPrueba = 'Pruebas'
 const baseModel = {
-  _id: { 
+  _id: {
     type: Number
   },
   name: String,
@@ -15,7 +15,7 @@ const baseModel = {
   }
 }
 
-const Prueba = Schema(ModelPrueba,baseModel)
+const Prueba = Schema(ModelPrueba, baseModel)
 
 // Prueba.create({
 //   _id: 3,
@@ -23,4 +23,4 @@ const Prueba = Schema(ModelPrueba,baseModel)
 //   bag : ["patilla", "lulo"]
 // }).save()
 
-console.log(Prueba.find(user => user.name == name));
+console.log(Prueba.find(user => user.name === name))

@@ -4,7 +4,7 @@ import { createDirname } from './utils/path.mjs'
 import { verifyUser } from './schemas/schema.mjs'
 import swaggerUI from 'swagger-ui-express'
 import specs from './swagger/swagger.mjs'
-import {createUserRoute} from './routes/user.route.mjs'
+import { createUserRoute } from './routes/user.route.mjs'
 
 const { __dirname } = createDirname(import.meta.url)
 const PORT = process.env.PORT || 3000
