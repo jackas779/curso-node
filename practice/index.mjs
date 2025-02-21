@@ -12,6 +12,8 @@ const PORT = process.env.PORT || 3000
 
 const app = express()
 
+app.disable('x-powered-by')
+
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs))

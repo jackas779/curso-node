@@ -1,13 +1,12 @@
 import { ModelUser, baseModelUser } from '../../schemas/user.schema.bd.mjs'
-import DbLocal from 'db-local'
+import { connectionBd } from '../../databases/to-local/db.schema.mjs'
 import crypto from 'crypto'
 
 const { randomUUID } = crypto
-const { Schema } = new DbLocal({ path: './data' })
 
 export class UserModel {
   static create ({ input }) {
-    const userSchema = Schema(ModelUser, baseModelUser)
+    const userSchema = connectionBd(ModelUser, baseModelUser)
 
     const userRegister = userSchema.findOne({ username: input.username })
 
