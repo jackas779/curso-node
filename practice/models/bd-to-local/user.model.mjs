@@ -6,21 +6,31 @@ const { randomUUID } = crypto
 const { Schema } = new DbLocal({ path: './data' })
 
 export class UserModel {
-  constructor () {
-    this.userSchema = Schema(ModelUser, baseModelUser)
-  }
+  static create ({ input }) {
+    const userSchema = Schema(ModelUser, baseModelUser)
 
-  static async create ({ input }) {
+    const userRegister = userSchema.findOne({ username: input.username })
+
+    if (userRegister) {
+      return { ok: true }
+    }
+
     const newUser = {
       _id: randomUUID(),
       ...input
     }
-    this.userSchema.create(newUser).save()
+
+    userSchema.create(newUser).save()
 
     const result = {
-      ok: true,
-      user: newUser
+      ok: false,
+      user: input
     }
+
     return result
+  }
+
+  static console () {
+    console.log('estoy imprimiendo')
   }
 }

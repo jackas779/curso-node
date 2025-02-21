@@ -1,40 +1,38 @@
-import { boolean, number, string } from 'zod'
-
 export const ModelUser = 'users'
 export const baseModelUser = {
   _id: {
-    type: Number
+    type: String
   },
   username: {
-    type: string,
+    type: String,
     required: true
   },
   firstName: {
-    type: string,
+    type: String,
     required: true
   },
   lastName: {
-    type: string,
+    type: String,
     required: true
   },
   email: {
-    type: string,
+    type: String,
     required: true
   },
   password: {
-    type: string,
+    type: String,
     required: true
   },
   phone: {
-    type: string,
+    type: String,
     required: true
   },
   age: {
-    type: number,
+    type: Number,
     required: true
   },
   isAdult: {
-    type: boolean,
+    type: Boolean,
     required: true
   }
 }
