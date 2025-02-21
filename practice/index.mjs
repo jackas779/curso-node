@@ -5,6 +5,7 @@ import { verifyUser } from './schemas/schema.mjs'
 import swaggerUI from 'swagger-ui-express'
 import specs from './swagger/swagger.mjs'
 import { createUserRoute } from './routes/user.route.mjs'
+import { UserModel } from './models/bd-to-local/user.model.mjs'
 
 const { __dirname } = createDirname(import.meta.url)
 const PORT = process.env.PORT || 3000
@@ -40,7 +41,7 @@ app.get('./pdf', (req, res) => {
 
 // app.post('/user/register', (userCreate))
 // app.use('/user/',createUserRoute()) /// rutas de usuarios manera 1
-app.use(createUserRoute())/// ruta de usuarios manera 2
+app.use(createUserRoute({ userModel: UserModel }))/// ruta de usuarios manera 2
 
 app.listen(PORT, () => {
   console.log(` escuchando desde http://localhost:${PORT}`)

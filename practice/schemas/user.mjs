@@ -11,7 +11,7 @@ const userSchema = z.object({
   password: z.string().min(8).max(30),
   phone: z.string().min(10).max(10).length(10),
   age: z.number().int().positive().min(16),
-  isAdult: z.boolean(),
+  isAdult: z.boolean()
 })
 
 export const validateUser = (input) => userSchema.safeParse(input)

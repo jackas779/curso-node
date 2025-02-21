@@ -3,7 +3,7 @@ GET http://localhost:1234/
 
 ###
 
-POST http://localhost:1234/register/user
+POST http://localhost:1234/user/register
 Content-Type: application/json
 
 {
@@ -11,7 +11,7 @@ Content-Type: application/json
   "password": "123456789",
   "email":"correo@gmail.com",
   "phone": "2548957525",
-  "firtsName" : "Jack",
+  "firstName" : "Jack",
   "lastName" : "Ardila",
   "imgPhoto" : null,
   "age": 24,

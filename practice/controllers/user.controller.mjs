@@ -1,9 +1,11 @@
-import { UserModel } from '../models/user.model.mjs'
 import { validateUser } from '../schemas/user.mjs'
 
 export class UserController {
-  
-  create (req,res){
+  constructor ({ userModel }) {
+    this.userModel = userModel
+  }
+
+  create (req, res) {
     const result = validateUser(req.body)
     if (!result.success) {
       console.log(result.error.issues[0])
@@ -11,7 +13,10 @@ export class UserController {
       const error = result.error.issues[0].message
       return res.status(422).send({ field, error })
     }
-    const userModel = UserModel.create()
-    return res.status(201).json(userModel)
+    const resultCreate = this.userModel.create(req.body)
+    if (resultCreate.ok) {
+      return res.status(401).json({ message: 'Usuario ya existe' })
+    }
+    return res.status(201).json(resultCreate.user)
   }
 }
