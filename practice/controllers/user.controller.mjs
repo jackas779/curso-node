@@ -16,8 +16,13 @@ export class UserController {
     const resultCreate = this.userModel.create({ input: result.data })
 
     if (resultCreate.ok) {
-      return res.status(401).json({ message: 'Usuario ya registrado' })
+      return res.status(400).json({ message: 'Usuario ya esta registrado' })
     }
     return res.status(201).json({ message: 'Usuario creado satifactoriamente', user: resultCreate.user.username })
+  }
+
+  get = (req, res) => {
+    const { username } = req.params
+    const user = this.userModel.get({ username })
   }
 }

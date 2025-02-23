@@ -6,6 +6,9 @@ export const createUserRoute = ({ userModel }) => {
   const userRoute = Router()
 
   userRoute.post('/user/register', userController.create)
+  userRoute.get('/user/:username', (req, res) => {
+    res.send(req.params)
+  })
 
   return userRoute
 }

@@ -29,7 +29,7 @@ export class UserModel {
     return result
   }
 
-  static console () {
-    console.log('estoy imprimiendo')
+  static get ({ username }) {
+    const userSchema = connectionBd(ModelUser, baseModelUser)
   }
 }

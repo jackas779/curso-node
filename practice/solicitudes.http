@@ -1,23 +1,6 @@
 
 GET http://localhost:1234/
 
-###
-
-POST http://localhost:1234/user/register
-Content-Type: application/json
-
-{
-  "username": "nameuser",
-  "password": "123456789",
-  "email":"correo@gmail.com",
-  "phone": "2548957525",
-  "firstName" : "Jack",
-  "lastName" : "Ardila",
-  "imgPhoto" : null,
-  "age": 24,
-  "isAdult": true
-}
-
 
 ### 
 GET http://localhost:1234/users
@@ -37,3 +20,28 @@ Content-Type: application/json
   "pageSize": 10,
   "user": 9
 }
+
+###
+
+GET http://localhost:1234/user/nameuser
+
+
+###
+
+POST http://localhost:1234/user/register
+Content-Type: application/json
+
+{
+  "username": "nameuser",
+  "password": "123456789",
+  "email":"correo@gmail.com",
+  "phone": "2548957525",
+  "firstName" : "Jack",
+  "lastName" : "Ardila",
+  "imgPhoto" : null,
+  "age": 24,
+  "isAdult": true
+}
+
+### 
+
