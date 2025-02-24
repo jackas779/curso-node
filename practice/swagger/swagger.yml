@@ -40,13 +40,23 @@ paths:
           content:
             'application/json': {}
       x-codegen-request-body-name: body
-  /user/login:
-    get:
+  /auth/login:
+    post:
       tags:
         - user
       summary: Logs user into the system
       operationId: loginUser
-      parameters:
+      requestBody:  # Se agregó el cuerpo de la solicitud
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      parameters:  # Parámetros eliminados ya que ahora se usan en el cuerpo
         - name: username
           in: query
           description: The user name for login
@@ -61,15 +71,15 @@ paths:
             type: string
       responses:
         "200":
-          description: successful operation
+          description: Successful operation
           headers:
             X-Rate-Limit:
-              description: calls per hour allowed by the user
+              description: Calls per hour allowed by the user
               schema:
                 type: integer
                 format: int32
             X-Expires-After:
-              description: date in UTC when token expires
+              description: Date in UTC when token expires
               schema:
                 type: string
                 format: date-time

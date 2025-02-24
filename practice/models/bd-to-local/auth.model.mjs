@@ -4,7 +4,7 @@ import crypto from 'crypto'
 
 const { randomUUID } = crypto
 
-export class UserModel {
+export class AuthModel {
   static create ({ input }) {
     const userSchema = connectionBd(ModelUser, baseModelUser)
 
@@ -29,7 +29,15 @@ export class UserModel {
     return result
   }
 
-  static get ({ username }) {
+  static login ({ username, password }) {
     const userSchema = connectionBd(ModelUser, baseModelUser)
+    const user = userSchema.findOne({ username })
+    if (!user) {
+      return false
+    }
+    if (password !== user.password) {
+      return false
+    }
+    return { message: 'ingreso correctamente' }
   }
 }
