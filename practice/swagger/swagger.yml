@@ -12,7 +12,7 @@ tags:
   - name: user
     description: Operaciones con el usuario
 paths:
-  /user/register:
+  /auth/register:
     post:
       tags:
         - user
