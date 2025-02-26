@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "db-local": "3.1.0",
+    "muhammara": "5.3.0",
     "standard": "17.1.2"
   },
   "eslintConfig": {

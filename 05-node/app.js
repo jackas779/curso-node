@@ -2,8 +2,8 @@
 import express, { json } from 'express'
 import { corsMiddleware } from './middlewares/cors.js'
 import { createMoviesRouter } from './routes/movies.js'
-import { MovieModel } from './models/bd-to-mysql/movie.js'
-// import { MovieModel } from './models/bd-to-local/movie.js'
+// import { MovieModel } from './models/bd-to-mysql/movie.js'
+import { MovieModel } from './models/bd-to-local/movie.js'
 
 const api = express()
 // const { validationPaginator } = require('./schemas/pagination')
