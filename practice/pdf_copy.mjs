@@ -27,6 +27,8 @@ doc.addPage({
 doc.font('Helvetica-Bold')
   .fontSize(18)
   .text('Jack Nicolas Ardila Ochoa')
+  .fillColor('#118cb6 ')
+  .text('Desarrollador Full Stack')
 
 doc.text('\n')
 
@@ -153,7 +155,7 @@ doc.addPage()
 
 doc.font('Helvetica-Bold')
   .fontSize(12)
-  .text('Formación')
+  .text('EDUCACIÓN')
 
 doc.text('\n')
 
@@ -186,7 +188,7 @@ doc.font('Helvetica-Bold')
   .fontSize(12)
   .fillColor('black')
   .text('\n\n')
-  .text('Cursos')
+  .text('CAPACITACIÓN / CURSOS')
 
 doc.text('\n')
 
